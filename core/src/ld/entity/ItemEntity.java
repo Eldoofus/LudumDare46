@@ -12,6 +12,7 @@ import static ld.Game.player;
 public class ItemEntity extends Entity{
     public Item item;
     public Vec2 velocity = new Vec2();
+    private int despawn = 0;
 
     public ItemEntity(Item item){
         this.item = item;
@@ -38,6 +39,13 @@ public class ItemEntity extends Entity{
             float drag = 0.13f;
 
             velocity.scl(Mathf.clamp(1f - drag * Time.delta()));
+        }
+        if(this.item == item.key || this.item == item.frozenkey){
+            if(this.despawn >= 60){
+                remove();
+            } else {
+                this.despawn += 1;
+            }
         }
     }
 
